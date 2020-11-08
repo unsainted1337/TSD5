@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">form</string>
+    <string name="app_name">SimpleNewsForm</string>
     <string name="title">Заголовок</string>
     <string name="subtitle">Подзаголовок</string>
     <string name="writer">Автор</string>
