@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">form</string>
+    <string name="title">Заголовок</string>
+    <string name="subtitle">Подзаголовок</string>
+    <string name="writer">Автор</string>
+    <string name="image">Картинка</string>
+    <string name="select">Выбрать</string>
+    <string name="send">Отправить</string>
+    <string-array name="type">
+        <item>Нет типа</item>
+        <item>Новости</item>
+        <item>Уведомления</item>
+        <item>Внимание</item>
+    </string-array>
+</resources>
