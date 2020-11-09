@@ -25,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
 
     Spinner type_spinner;
 
+    /**
+     * Слушатель поля image_url. После изменения текста подзагружает превью картинки.
+     * Всех слушателей полек реализовывать через TextWatcher
+     */
     TextWatcher imageUrlListener = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -61,9 +65,6 @@ public class MainActivity extends AppCompatActivity {
         image_url_input = findViewById(R.id.image_url);
 
         image_url_input.addTextChangedListener(imageUrlListener);
-
-//        new PreLoadImageTask(image_preview).execute("https://avatars.mds.yandex.net/get-zen_doc/1586206/pub_5d990c062beb4900adf5c374_5d990e9b3642b600ad3ee190/scale_1200");
-
 
         String type1 = String.valueOf(type_spinner.getSelectedItemPosition()); // Хуйня. Значение возмётся 1 раз при запуске активити, а там по умолчанию будет 0. Нужен onSelectedItemListener()
     }
