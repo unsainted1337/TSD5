@@ -12,11 +12,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
+    TextInputLayout title_input_layout;
     TextInputEditText title_input;
 
     TextInputEditText sub_title_input;
@@ -26,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     TextInputEditText image_url_input;
 
     ImageView image_preview;
+
+    MaterialButton send_button;
 
     Spinner type_spinner;
 
@@ -53,10 +58,24 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    View.OnClickListener sendButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (title_input.getText().toString().isEmpty()) {
+                title_input_layout.setError("Поле не должно быть пустым");
+                title_input_layout.setErrorEnabled(true);
+                return;
+            }
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        title_input_layout = findViewById(R.id.title_layout);
 
         title_input = findViewById(R.id.title);
 
@@ -69,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
         image_preview = findViewById(R.id.image_preview);
 
         image_url_input = findViewById(R.id.image_url);
+
+        send_button = findViewById(R.id.bSend);
+        send_button.setOnClickListener(sendButtonListener);
 
         image_url_input.addTextChangedListener(imageUrlListener);
 
