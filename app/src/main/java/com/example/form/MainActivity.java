@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 String[] type1 = getResources().getStringArray(R.array.type);
                 type_id=id+1;
                 Toast toast = Toast.makeText(getApplicationContext(),
-                        "Ваш выбор: " + type1[position] + ". Позиция:" + position + ". ID:" + id  , Toast.LENGTH_SHORT);
+                        "Ваш выбор: " + type1[position] + ". Позиция:" + position + ". ID:" + type_id  , Toast.LENGTH_SHORT);
                 toast.show();
             }
 
