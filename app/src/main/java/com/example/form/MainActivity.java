@@ -26,6 +26,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 
 import static com.example.form.MainActivity.TextInputs.IMAGE_URL;
+import static com.example.form.MainActivity.TextInputs.TITLE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,6 +62,74 @@ public class MainActivity extends AppCompatActivity {
     Spinner type_spinner;
 
     long type_id;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        ButterKnife.bind(this);
+
+        editTexts.get(IMAGE_URL.ordinal()).addTextChangedListener(imageUrlListener);
+
+        send_button.setOnClickListener(sendButtonListener);
+
+        type_spinner.setOnItemSelectedListener(itemSelectedListener);
+
+        editTexts.get(TITLE.ordinal()).addTextChangedListener(titleTextWatcher);
+
+    }
+
+    private void loadImagePreview(String url) {
+        Picasso.get()
+                .load(url)
+                .into(image_preview, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        image_frame.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                    }
+                });
+    }
+
+    //TODO Хуйня какая то. Сделать получше...
+    TextWatcher titleTextWatcher = new TextWatcher() {
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            TextInputLayout title_layout = inputLayouts.get(TextInputLayouts.TITLE_LAYOUT.ordinal());
+
+            if (charSequence.toString().isEmpty()) {
+                title_layout.setError("Поле должно быть заполнено");
+                title_layout.setErrorEnabled(true);
+            }
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            TextInputLayout title_layout = inputLayouts.get(TextInputLayouts.TITLE_LAYOUT.ordinal());
+
+            title_layout.setErrorEnabled(false);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+            TextInputLayout title_layout = inputLayouts.get(TextInputLayouts.TITLE_LAYOUT.ordinal());
+
+            if (editable.toString().isEmpty()) {
+                title_layout.setError("Поле должно быть заполнено");
+                title_layout.setErrorEnabled(true);
+            }
+        }
+    };
 
     /**
      * Слушатель поля image_url. После изменения текста подзагружает превью картинки.
@@ -103,44 +172,9 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener sendButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-//            if (title_input.getText().toString().isEmpty()) {
-//                title_input_layout.setError("Поле не должно быть пустым");
-//                title_input_layout.setErrorEnabled(true);
-//                return;
-//            }
 
         }
     };
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        ButterKnife.bind(this);
-
-        editTexts.get(IMAGE_URL.ordinal()).addTextChangedListener(imageUrlListener);
-
-        send_button.setOnClickListener(sendButtonListener);
-
-        type_spinner.setOnItemSelectedListener(itemSelectedListener);
-    }
-
-    private void loadImagePreview(String url) {
-        Picasso.get()
-                .load(url)
-                .into(image_preview, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        image_frame.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-
-                    }
-                });
-    }
 
     protected enum TextInputLayouts {
         TITLE_LAYOUT,
@@ -150,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected enum TextInputs {
-        TITLE_,
+        TITLE,
         SUB_TITLE,
         AUTHOR,
         IMAGE_URL
