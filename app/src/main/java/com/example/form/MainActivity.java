@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     Spinner type_spinner;
 
+    long type_id;
+
     /**
      * Слушатель поля image_url. После изменения текста подзагружает превью картинки.
      * Всех слушателей полек реализовывать через TextWatcher
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String[] type1 = getResources().getStringArray(R.array.type);
-                id=id+1;
+                type_id=id+1;
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "Ваш выбор: " + type1[position] + ". Позиция:" + position + ". ID:" + id  , Toast.LENGTH_SHORT);
                 toast.show();
