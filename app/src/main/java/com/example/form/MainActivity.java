@@ -5,11 +5,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Toast;
-
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -74,14 +73,13 @@ public class MainActivity extends AppCompatActivity {
         image_url_input.addTextChangedListener(imageUrlListener);
 
 
-
         OnItemSelectedListener itemSelectedListener = new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String[] type1 = getResources().getStringArray(R.array.type);
-                type_id=id+1;
+                type_id = id + 1;
                 Toast toast = Toast.makeText(getApplicationContext(),
-                        "Ваш выбор: " + type1[position] + ". Позиция:" + position + ". ID:" + type_id  , Toast.LENGTH_SHORT);
+                        "Ваш выбор: " + type1[position] + ". Позиция:" + position + ". ID:" + type_id, Toast.LENGTH_SHORT);
                 toast.show();
             }
 
@@ -98,6 +96,4 @@ public class MainActivity extends AppCompatActivity {
                 .load(url)
                 .into(image_preview);
     }
-
-
 }
