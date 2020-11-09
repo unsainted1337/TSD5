@@ -13,25 +13,51 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
+
+import static com.example.form.MainActivity.TextInputs.IMAGE_URL;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextInputLayout title_input_layout;
-    TextInputEditText title_input;
 
-    TextInputEditText sub_title_input;
+    @BindViews({R.id.title_layout, R.id.sub_title_layout, R.id.author_layout, R.id.image_url_layout})
+    List<TextInputLayout> inputLayouts;
 
-    TextInputEditText author_input;
+    @BindViews({R.id.title, R.id.sub_title, R.id.author, R.id.image_url})
+    List<TextInputEditText> editTexts;
 
-    TextInputEditText image_url_input;
+//    TextInputLayout title_input_layout;
+//    TextInputEditText title_input;
+//
+//    TextInputLayout sub_title_input_layout;
+//    TextInputEditText sub_title_input;
+//
+//    TextInputLayout author_input_layout;
+//    TextInputEditText author_input;
+//
+//    TextInputLayout image_url_layout;
+//    TextInputEditText image_url_input;
 
+    @BindView(R.id.image_frame)
+    MaterialCardView image_frame;
+
+    @BindView(R.id.image_preview)
     ImageView image_preview;
 
+    @BindView(R.id.bSend)
     MaterialButton send_button;
 
+    @BindView(R.id.spinner)
     Spinner type_spinner;
 
     long type_id;
@@ -58,14 +84,30 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    OnItemSelectedListener itemSelectedListener = new OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            String[] type1 = getResources().getStringArray(R.array.type);
+            type_id = id + 1;
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "Ваш выбор: " + type1[position] + ". Позиция:" + position + ". ID:" + type_id, Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
+
     View.OnClickListener sendButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (title_input.getText().toString().isEmpty()) {
-                title_input_layout.setError("Поле не должно быть пустым");
-                title_input_layout.setErrorEnabled(true);
-                return;
-            }
+//            if (title_input.getText().toString().isEmpty()) {
+//                title_input_layout.setError("Поле не должно быть пустым");
+//                title_input_layout.setErrorEnabled(true);
+//                return;
+//            }
 
         }
     };
@@ -75,47 +117,42 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        title_input_layout = findViewById(R.id.title_layout);
+        ButterKnife.bind(this);
 
-        title_input = findViewById(R.id.title);
+        editTexts.get(IMAGE_URL.ordinal()).addTextChangedListener(imageUrlListener);
 
-        sub_title_input = findViewById(R.id.sub_title);
-
-        author_input = findViewById(R.id.author);
-
-        type_spinner = findViewById(R.id.spinner);
-
-        image_preview = findViewById(R.id.image_preview);
-
-        image_url_input = findViewById(R.id.image_url);
-
-        send_button = findViewById(R.id.bSend);
         send_button.setOnClickListener(sendButtonListener);
 
-        image_url_input.addTextChangedListener(imageUrlListener);
-
-
-        OnItemSelectedListener itemSelectedListener = new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String[] type1 = getResources().getStringArray(R.array.type);
-                type_id = id + 1;
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Ваш выбор: " + type1[position] + ". Позиция:" + position + ". ID:" + type_id, Toast.LENGTH_SHORT);
-                toast.show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        };
         type_spinner.setOnItemSelectedListener(itemSelectedListener);
     }
 
     private void loadImagePreview(String url) {
         Picasso.get()
                 .load(url)
-                .into(image_preview);
+                .into(image_preview, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        image_frame.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
+    }
+
+    protected enum TextInputLayouts {
+        TITLE_LAYOUT,
+        SUB_TITLE_LAYOUT,
+        AUTHOR_LAYOUT,
+        IMAGE_URL_LAYOUT
+    }
+
+    protected enum TextInputs {
+        TITLE_,
+        SUB_TITLE,
+        AUTHOR,
+        IMAGE_URL
     }
 }
