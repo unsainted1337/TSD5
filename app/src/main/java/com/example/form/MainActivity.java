@@ -3,8 +3,13 @@ package com.example.form;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Toast;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -66,7 +71,23 @@ public class MainActivity extends AppCompatActivity {
 
         image_url_input.addTextChangedListener(imageUrlListener);
 
-        String type1 = String.valueOf(type_spinner.getSelectedItemPosition()); // Хуйня. Значение возмётся 1 раз при запуске активити, а там по умолчанию будет 0. Нужен onSelectedItemListener()
+
+
+        OnItemSelectedListener itemSelectedListener = new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String[] type1 = getResources().getStringArray(R.array.type);
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Ваш выбор: " + type1[position] , Toast.LENGTH_SHORT);
+                toast.show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        };
+        type_spinner.setOnItemSelectedListener(itemSelectedListener);
     }
 
     private void loadImagePreview(String url) {
@@ -74,5 +95,6 @@ public class MainActivity extends AppCompatActivity {
                 .load(url)
                 .into(image_preview);
     }
+
 
 }
