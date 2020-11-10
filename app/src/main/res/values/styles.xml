@@ -7,4 +7,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="warning_appearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#FBC02D</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="error_appearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#D32F2F</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>

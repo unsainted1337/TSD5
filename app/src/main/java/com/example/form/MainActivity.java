@@ -100,10 +100,14 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess() {
                         image_frame.setVisibility(View.VISIBLE);
+                        image_url_layout.setErrorEnabled(false);
                     }
 
                     @Override
                     public void onError(Exception e) {
+                        image_frame.setVisibility(View.GONE);
+                        image_url_layout.setError("Не удалось загрузить картинку");
+                        image_url_layout.setErrorEnabled(true);
                     }
                 });
     }
@@ -113,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             if (charSequence.toString().isEmpty()) {
                 title_input_layout.setError("Поле должно быть заполнено");
                 title_input_layout.setErrorEnabled(true);
@@ -143,18 +146,18 @@ public class MainActivity extends AppCompatActivity {
     TextWatcher imageUrlListener = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
         }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
         }
 
         @Override
         public void afterTextChanged(Editable editable) {
-            if (!editable.toString().isEmpty())
+            if (!editable.toString().isEmpty()) {
                 loadImagePreview(editable.toString());
+            }
+            image_url_layout.setErrorEnabled(false);
         }
     };
 
