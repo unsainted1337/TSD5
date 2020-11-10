@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,35 +18,49 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.ButterKnife;
 
-import static com.example.form.MainActivity.TextInputs.IMAGE_URL;
-import static com.example.form.MainActivity.TextInputs.TITLE;
 
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * Я решил упростить код немного. Так тебе будет проще понять.
+     * <p>
+     * Библиотека ButterKnife упрощает инициилизацю. Это полезно когда много объектов на активити.
+     * И что бы не захламлять onCreate() с помощью бибилиотеки можно добавить аннтоацию перед полем.
+     *
+     * @BindView TextInputLayout title_input_layout;
+     * <p>
+     * Это всё равно что:
+     * TextInputLayout title_input_layout = findViewById(id);
+     * <p>
+     * Если понял (хотя бы примерно) удали этот комметарий.
+     */
 
-    @BindViews({R.id.title_layout, R.id.sub_title_layout, R.id.author_layout, R.id.image_url_layout})
-    List<TextInputLayout> inputLayouts;
+    @BindView(R.id.title_layout)
+    TextInputLayout title_input_layout;
 
-    @BindViews({R.id.title, R.id.sub_title, R.id.author, R.id.image_url})
-    List<TextInputEditText> editTexts;
+    @BindView(R.id.title)
+    TextInputEditText title_input;
 
-//    TextInputLayout title_input_layout;
-//    TextInputEditText title_input;
-//
-//    TextInputLayout sub_title_input_layout;
-//    TextInputEditText sub_title_input;
-//
-//    TextInputLayout author_input_layout;
-//    TextInputEditText author_input;
-//
-//    TextInputLayout image_url_layout;
-//    TextInputEditText image_url_input;
+    @BindView(R.id.sub_title_layout)
+    TextInputLayout sub_title_input_layout;
+
+    @BindView(R.id.sub_title)
+    TextInputEditText sub_title_input;
+
+    @BindView(R.id.author_layout)
+    TextInputLayout author_input_layout;
+
+    @BindView(R.id.author)
+    TextInputEditText author_input;
+
+    @BindView(R.id.image_url_layout)
+    TextInputLayout image_url_layout;
+
+    @BindView(R.id.image_url)
+    TextInputEditText image_url_input;
 
     @BindView(R.id.image_frame)
     MaterialCardView image_frame;
@@ -63,8 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
     long type_id;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,13 +83,13 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        editTexts.get(IMAGE_URL.ordinal()).addTextChangedListener(imageUrlListener);
+        image_url_input.addTextChangedListener(imageUrlListener);
 
         send_button.setOnClickListener(sendButtonListener);
 
         type_spinner.setOnItemSelectedListener(itemSelectedListener);
 
-        editTexts.get(TITLE.ordinal()).addTextChangedListener(titleTextWatcher);
+        title_input.addTextChangedListener(titleTextWatcher);
 
     }
 
@@ -103,30 +114,24 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            TextInputLayout title_layout = inputLayouts.get(TextInputLayouts.TITLE_LAYOUT.ordinal());
-
             if (charSequence.toString().isEmpty()) {
-                title_layout.setError("Поле должно быть заполнено");
-                title_layout.setErrorEnabled(true);
+                title_input_layout.setError("Поле должно быть заполнено");
+                title_input_layout.setErrorEnabled(true);
             }
         }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            TextInputLayout title_layout = inputLayouts.get(TextInputLayouts.TITLE_LAYOUT.ordinal());
-
-            title_layout.setErrorEnabled(false);
+            title_input_layout.setErrorEnabled(false);
         }
 
         @Override
         public void afterTextChanged(Editable editable) {
 
-            TextInputLayout title_layout = inputLayouts.get(TextInputLayouts.TITLE_LAYOUT.ordinal());
-
             if (editable.toString().isEmpty()) {
-                title_layout.setError("Поле должно быть заполнено");
-                title_layout.setErrorEnabled(true);
+                title_input_layout.setError("Поле должно быть заполнено");
+                title_input_layout.setErrorEnabled(true);
             }
         }
     };
@@ -158,9 +163,9 @@ public class MainActivity extends AppCompatActivity {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             String[] type1 = getResources().getStringArray(R.array.type);
             type_id = id + 1;
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "Ваш выбор: " + type1[position] + ". Позиция:" + position + ". ID:" + type_id, Toast.LENGTH_SHORT);
-            toast.show();
+//            Toast toast = Toast.makeText(getApplicationContext(),
+//                    "Ваш выбор: " + type1[position] + ". Позиция:" + position + ". ID:" + type_id, Toast.LENGTH_SHORT);
+//            toast.show();
         }
 
         @Override
@@ -176,17 +181,4 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    protected enum TextInputLayouts {
-        TITLE_LAYOUT,
-        SUB_TITLE_LAYOUT,
-        AUTHOR_LAYOUT,
-        IMAGE_URL_LAYOUT
-    }
-
-    protected enum TextInputs {
-        TITLE,
-        SUB_TITLE,
-        AUTHOR,
-        IMAGE_URL
-    }
 }
