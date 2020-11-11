@@ -24,19 +24,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    /**
-     * Я решил упростить код немного. Так тебе будет проще понять.
-     * <p>
-     * Библиотека ButterKnife упрощает инициилизацю. Это полезно когда много объектов на активити.
-     * И что бы не захламлять onCreate() с помощью бибилиотеки можно добавить аннтоацию перед полем.
-     *
-     * @BindView TextInputLayout title_input_layout;
-     * <p>
-     * Это всё равно что:
-     * TextInputLayout title_input_layout = findViewById(id);
-     * <p>
-     * Если понял (хотя бы примерно) удали этот комметарий.
-     */
 
     @BindView(R.id.title_layout)
     TextInputLayout title_input_layout;
@@ -76,6 +63,12 @@ public class MainActivity extends AppCompatActivity {
 
     long type_id;
 
+    String imageURL;
+
+    String subTitle;
+
+    String auThor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +83,10 @@ public class MainActivity extends AppCompatActivity {
         type_spinner.setOnItemSelectedListener(itemSelectedListener);
 
         title_input.addTextChangedListener(titleTextWatcher);
+        //добавил слушателя к подзаголовку
+        sub_title_input.addTextChangedListener(subtitleTextWatcher);
 
+        author_input.addTextChangedListener(authorTextWatcher);
     }
 
     private void loadImagePreview(String url) {
@@ -138,6 +134,55 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+    // Слушатель для подзаголовка
+    TextWatcher subtitleTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            if (s.toString().isEmpty()){
+                sub_title_input_layout.setError("Поле должно быть заполнено");
+                sub_title_input_layout.setErrorEnabled(true);
+            }
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            sub_title_input_layout.setErrorEnabled(false);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if(s.toString().isEmpty()){
+                sub_title_input_layout.setError("Поле должно быть заполнено");
+                sub_title_input_layout.setErrorEnabled(true);
+            }
+            subTitle = sub_title_input.getText().toString();
+        }
+    };
+    //слушатель для автора
+    TextWatcher authorTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            if (s.toString().isEmpty()){
+                author_input_layout.setError("Поле должно быть заполнено");
+                author_input_layout.setErrorEnabled(true);
+            }
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            author_input_layout.setErrorEnabled(false);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if (s.toString().isEmpty()){
+                author_input_layout.setError("Поле должно быть заполнено");
+                author_input_layout.setErrorEnabled(true);
+            }
+            auThor = author_input.getText().toString();
+        }
+    };
 
     /**
      * Слушатель поля image_url. После изменения текста подзагружает превью картинки.
@@ -158,6 +203,8 @@ public class MainActivity extends AppCompatActivity {
                 loadImagePreview(editable.toString());
             }
             image_url_layout.setErrorEnabled(false);
+            //добавление ссылки в переменную
+            imageURL = image_url_input.getText().toString();
         }
     };
 
