@@ -6,10 +6,8 @@
     <string name="image">Картинка</string>
     <string name="select">Выбрать</string>
     <string name="send">Отправить</string>
-    <string-array name="type">
-        <item>Нет типа</item>
-        <item>Новости</item>
-        <item>Уведомления</item>
-        <item>Внимание</item>
-    </string-array>
+
+    <string name="title_activity_main_menu">MainMenu</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

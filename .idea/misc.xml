@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/user/AndroidStudioProjects/form/app/src/main/res/layout-w1240dp/content_scrolling.xml" value="0.23560910307898258" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/form/app/src/main/res/layout-w936dp/content_scrolling.xml" value="0.22301912568306012" />
         <entry key="..\:/Users/user/AndroidStudioProjects/form/app/src/main/res/layout/activity_main.xml" value="0.2957427536231884" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/form/app/src/main/res/layout/activity_main_menu.xml" value="0.2957427536231884" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/form/app/src/main/res/layout/content_scrolling.xml" value="0.2957427536231884" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/form/app/src/main/res/menu/menu_main_menu.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
