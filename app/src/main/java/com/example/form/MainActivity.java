@@ -1,22 +1,21 @@
 package com.example.form;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ImageView;
-import android.widget.Spinner;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.card.MaterialCardView;
+
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    //TODO Хуйня какая то. Сделать получше...
     TextWatcher loginTextWatcher = new TextWatcher() {
 
         @Override
@@ -121,6 +118,11 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener sing_in_ButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            if (login_input.toString().equals("1439892")  & password_input.toString().equals("1439892") ){
+            Intent intent = new Intent,MainMenu.class );
+            startActivity(intent);
+
+            }
 
         }
     };
