@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        sign_button.setOnClickListener(sendButtonListener);
+        sign_button.setOnClickListener(sing_in_ButtonListener);
 
         login_input.addTextChangedListener(loginTextWatcher);
         password_input.addTextChangedListener(passwordTextWatcher);
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
-    View.OnClickListener sendButtonListener = new View.OnClickListener() {
+    View.OnClickListener sing_in_ButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
 
